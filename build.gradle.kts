@@ -1,8 +1,8 @@
 plugins {
-	kotlin("jvm") version "1.9.20"
+	kotlin("jvm") version "2.0.0"
 	id("java-library")
 	id("maven-publish")
-	id("nebula.release") version "17.2.2"
+	id("nebula.release") version "19.0.8"
 }
 
 group = "org.shypl.tool"
@@ -16,10 +16,10 @@ repositories {
 }
 
 dependencies {
-	implementation("org.slf4j:slf4j-api:2.0.7")
+	implementation("org.slf4j:slf4j-api:2.0.13")
 	
 	testImplementation(kotlin("test"))
-	testImplementation("ch.qos.logback:logback-classic:1.4.9")
+	testImplementation("ch.qos.logback:logback-classic:1.5.6")
 }
 
 java {
