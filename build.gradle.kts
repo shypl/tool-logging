@@ -1,5 +1,5 @@
 plugins {
-	kotlin("jvm") version "2.0.21"
+	kotlin("jvm") version "2.1.0"
 	id("java-library")
 	id("maven-publish")
 	id("nebula.release") version "19.0.10"
@@ -19,7 +19,7 @@ dependencies {
 	implementation("org.slf4j:slf4j-api:2.0.16")
 	
 	testImplementation(kotlin("test"))
-	testImplementation("ch.qos.logback:logback-classic:1.5.12")
+	testImplementation("ch.qos.logback:logback-classic:1.5.16")
 }
 
 java {
