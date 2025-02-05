@@ -30,13 +30,12 @@ publishing {
 	publications.create<MavenPublication>("Library") {
 		from(components["java"])
 	}
-	repositories.maven {
-		url = uri("https://maven.pkg.github.com/shypl/maven")
-		credentials {
-			username = project.property("gpr.user") as String
-			password = project.property("gpr.key") as String
-		}
+	repositories.maven("https://maven.pkg.github.com/shypl/packages").credentials {
+		username = project.property("shypl.gpr.user") as String
+		password = project.property("shypl.gpr.key") as String
 	}
 }
 
-tasks["postRelease"].dependsOn(tasks["publish"])
+tasks.release {
+	finalizedBy(tasks.publish)
+}
