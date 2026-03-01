@@ -3,7 +3,7 @@ package org.shypl.tool.logging
 import org.slf4j.spi.LocationAwareLogger
 
 internal class AwareLoggerWrapper(logger: LocationAwareLogger) : AbstractLoggerWrapper<LocationAwareLogger>(logger) {
-	private val fqcn = Logger::class.java.name
+	private val fqcn = AwareLoggerWrapper::class.java.name
 	
 	override fun error(message: String, error: Throwable?) {
 		log(LocationAwareLogger.ERROR_INT, message, error)

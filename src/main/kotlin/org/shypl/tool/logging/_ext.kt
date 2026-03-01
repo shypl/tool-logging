@@ -58,8 +58,9 @@ inline fun Logger.wrap(crossinline transformer: (String) -> String): Logger {
 }
 
 fun Logger.wrap(prefix: String): Logger {
+	val prefixWithSpace = if (prefix.endsWith(' ')) prefix else "$prefix "
 	return object : MessageTransformerLogger(this) {
-		override fun transform(message: String) = prefix + message
+		override fun transform(message: String) = prefixWithSpace + message
 	}
 }
 

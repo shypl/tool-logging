@@ -120,4 +120,139 @@ class LoggerExecutionTest {
 		assertEquals("error with exception", listAppender.list[0].message)
 		assertEquals("test exception", listAppender.list[0].throwableProxy.message)
 	}
+	
+	@Test
+	fun testLazyWarnMessages() {
+		val logger = Logging.getLogger("test.lazy.warn")
+		var counter = 0
+		
+		logger.warn {
+			counter++
+			"lazy warn message"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy warn message", listAppender.list[0].message)
+		assertEquals(Level.WARN, listAppender.list[0].level)
+	}
+	
+	@Test
+	fun testLazyWarnMessagesWithThrowable() {
+		val logger = Logging.getLogger("test.lazy.warn.throwable")
+		val exception = RuntimeException("warn exception")
+		var counter = 0
+		
+		logger.warn(exception) {
+			counter++
+			"lazy warn with throwable"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy warn with throwable", listAppender.list[0].message)
+		assertEquals(Level.WARN, listAppender.list[0].level)
+		assertEquals("warn exception", listAppender.list[0].throwableProxy.message)
+	}
+	
+	@Test
+	fun testLazyErrorMessagesWithThrowable() {
+		val logger = Logging.getLogger("test.lazy.error.throwable")
+		val exception = RuntimeException("error exception")
+		var counter = 0
+		
+		logger.error(exception) {
+			counter++
+			"lazy error with throwable"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy error with throwable", listAppender.list[0].message)
+		assertEquals(Level.ERROR, listAppender.list[0].level)
+		assertEquals("error exception", listAppender.list[0].throwableProxy.message)
+	}
+	
+	@Test
+	fun testLazyTraceMessages() {
+		val logger = Logging.getLogger("test.lazy.trace")
+		var counter = 0
+		
+		logger.trace {
+			counter++
+			"lazy trace message"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy trace message", listAppender.list[0].message)
+		assertEquals(Level.TRACE, listAppender.list[0].level)
+	}
+	
+	@Test
+	fun testLazyTraceMessagesWithThrowable() {
+		val logger = Logging.getLogger("test.lazy.trace.throwable")
+		val exception = RuntimeException("trace exception")
+		var counter = 0
+		
+		logger.trace(exception) {
+			counter++
+			"lazy trace with throwable"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy trace with throwable", listAppender.list[0].message)
+		assertEquals(Level.TRACE, listAppender.list[0].level)
+		assertEquals("trace exception", listAppender.list[0].throwableProxy.message)
+	}
+	
+	@Test
+	fun testLazyInfoMessagesWithThrowable() {
+		val logger = Logging.getLogger("test.lazy.info.throwable")
+		val exception = RuntimeException("info exception")
+		var counter = 0
+		
+		logger.info(exception) {
+			counter++
+			"lazy info with throwable"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy info with throwable", listAppender.list[0].message)
+		assertEquals(Level.INFO, listAppender.list[0].level)
+		assertEquals("info exception", listAppender.list[0].throwableProxy.message)
+	}
+	
+	@Test
+	fun testLazyDebugMessagesWithThrowable() {
+		val logger = Logging.getLogger("test.lazy.debug.throwable")
+		val exception = RuntimeException("debug exception")
+		var counter = 0
+		
+		logger.debug(exception) {
+			counter++
+			"lazy debug with throwable"
+		}
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals(1, counter)
+		assertEquals("lazy debug with throwable", listAppender.list[0].message)
+		assertEquals(Level.DEBUG, listAppender.list[0].level)
+		assertEquals("debug exception", listAppender.list[0].throwableProxy.message)
+	}
+	
+	@Test
+	fun testWrapperWithPhraseTransformer() {
+		val logger = Logging.getLogger("test.wrap.phrase")
+		val wrappedLogger = logger.wrap("CONTEXT") { phrase, message ->
+			"[$phrase] $message"
+		}
+		
+		wrappedLogger.info("test info")
+		
+		assertEquals(1, listAppender.list.size)
+		assertEquals("[CONTEXT] test info", listAppender.list[0].message)
+	}
 }
